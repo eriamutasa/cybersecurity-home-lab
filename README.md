@@ -62,6 +62,36 @@ nmap -A -T4 -oN metasploitable_scan.txt 192.168.56.101
 - 📄 [Full Nmap Scan Output](Day-02-Nmap-Reconnaissance/metasploitable_scan.txt)
 - 📋 [Professional Recon Report (DOCX)](Day-02-Nmap-Reconnaissance/Day2_Recon_Report_Eria_Mutasa.docx)
 
+## 🔍 Day 03 — Network Traffic Analysis with Wireshark
+
+**Objective:** Capture and analyze live network traffic to demonstrate
+the critical security difference between plain-text and encrypted protocols.
+
+**Key Findings:**
+- Telnet (port 23): Full credentials captured in plain text via TCP Stream
+- FTP (port 21): Anonymous login with blank password — all activity visible
+- HTTP (port 80): Server version Apache/2.2.8 exposed in response headers
+- SSH (port 22): Complete encryption — TCP stream shows only gibberish
+- SYN packets captured proving real-time detection of connection attempts
+
+**Wireshark Filters Mastered:**
+\```
+icmp
+telnet
+ftp
+http
+tcp.port == 22
+ip.addr == 192.168.56.101
+tcp.flags.syn == 1 && tcp.flags.ack == 0
+frame contains "password"
+\```
+
+**Deliverables:**
+- 📄 [Packet Capture File](Day-03-Wireshark-Traffic-Analysis/day3_wireshark_capture.pcapng)
+- 📋 [Professional Traffic Analysis Report](Day-03-Wireshark-Traffic-Analysis/Day3_Traffic_Analysis_Report_Eria_Mutasa.docx)
+- 📝 [Observation Notes](Day-03-Wireshark-Traffic-Analysis/day3_observations.txt)
+```
+
 ## 🎯 Skills Demonstrated
 
 `Nmap` `Network Reconnaissance` `Port Scanning` `Service Enumeration`
