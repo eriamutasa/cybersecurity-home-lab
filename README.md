@@ -20,8 +20,8 @@ Built to develop practical SOC analyst skills.
 | Day | Topic | Tools Used | Status |
 |---|---|---|---|
 | Day 02 | Network Reconnaissance | Nmap 7.95 | ✅ Complete |
-| Day 03 | Traffic Analysis | Wireshark | 🔄 In Progress |
-| Day 04 | SIEM Setup & Log Ingestion | Splunk | ⏳ Upcoming |
+| Day 03 | Traffic Analysis | Wireshark | ✅ Complete |
+| Day 04 | SIEM Setup & Log Ingestion | Splunk | 🔄 In Progress |
 | Day 05 | Attack Simulation & Detection | Hydra, Splunk | ⏳ Upcoming |
 | Day 06 | Vulnerability Scanning | OpenVAS | ⏳ Upcoming |
 
