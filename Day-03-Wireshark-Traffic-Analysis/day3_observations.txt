@@ -1,0 +1,73 @@
+DAY 3 — WIRESHARK TRAFFIC ANALYSIS OBSERVATIONS
+=================================================
+Date: March 4, 2026
+Analyst: Eria Mutasa
+Tool: Wireshark 4.x on Kali Linux
+Target: Metasploitable2 (192.168.56.101)
+Attacker: Kali Linux (192.168.56.102)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+FINDING 1 — ICMP (Ping)
+Filter: icmp
+Result: Ping requests and replies captured in real time.
+        Source and destination IPs clearly visible.
+        Host discovery confirmed — target is alive.
+Risk: LOW
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+FINDING 2 — TELNET (Port 23)
+Filter: telnet
+Result: CRITICAL — Full session visible in TCP Stream.
+        Username: msfadmin — fully readable.
+        Password: msfadmin — fully readable.
+        All commands executed also visible.
+        Any attacker on the network can steal credentials
+        with zero effort using only Wireshark.
+Risk: CRITICAL
+Recommendation: Disable Telnet. Use SSH exclusively.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+FINDING 3 — FTP (Port 21)
+Filter: ftp
+Result: HIGH — Anonymous login accepted with blank password.
+        USER ftp / PASS (blank) visible in TCP stream.
+        No credentials required to access file system.
+        Mirrors the exact class of vulnerability in the
+        2021 Twitch breach (unauthenticated file access).
+Risk: HIGH
+Recommendation: Disable anonymous FTP. Replace with SFTP.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+FINDING 4 — HTTP (Port 80)
+Filter: http
+Result: MEDIUM — Full web requests visible in plain text.
+        Server version Apache/2.2.8 exposed in headers.
+        Browser type and all request headers readable.
+        HTML source code of responses fully visible.
+Risk: MEDIUM
+Recommendation: Enforce HTTPS with TLS 1.2 minimum.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+FINDING 5 — SSH (Port 22) CONTRAST
+Filter: tcp.port == 22
+Result: SECURE — TCP stream shows only encrypted data.
+        Username, password and commands unreadable.
+        Encryption working exactly as intended.
+Risk: LOW — Correctly implemented encryption.
+Recommendation: Use SSH for all remote access needs.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+KEY LESSON:
+Protocol choice is a security decision not just a
+technical preference. Telnet, FTP, and HTTP expose
+everything to anyone watching the network.
+SSH, SFTP, and HTTPS encrypt all data in transit.
+A SOC analyst must understand this distinction to
+detect credential interception attacks in real time
+and provide clear remediation guidance.
